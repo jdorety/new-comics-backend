@@ -31,6 +31,15 @@ router.get("/previous", async (req, res) => {
   }
 });
 
-
+// gets new comics for next week
+router.get("/future", async (req, res) => {
+  try {
+    const newComics = await axios.get(`${API}/comics/v1/future`);
+    res.status(200).send({ comics: newComics.data.comics });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
 
 module.exports = router;
