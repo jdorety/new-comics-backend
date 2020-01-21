@@ -1,5 +1,5 @@
 const express = require("express");
-// const cors = require("cors");
+const cors = require("cors");
 const helmet = require("helmet");
 const logger = require("morgan");
 
@@ -9,7 +9,9 @@ const newComics = require("./routers/newComics");
 server.use(express.json());
 server.use(logger("short"));
 server.use(helmet());
-// server.use(cors());
+server.use(cors({
+  origin: "http://localhost:3000"
+}));
 server.use("/newcomics", newComics);
 
 module.exports = server;
