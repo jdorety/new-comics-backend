@@ -3,7 +3,21 @@ const db = require("../dbConfig");
 module.exports = { getAll, getByDiamondId, addBook, getAllDiamond };
 
 function getAll() {
-  return db.select().table("book");
+  return db
+    .select()
+    .table("book")
+    .innerJoin("publisher", "book.publisher_id", "publisher.id")
+    .returning(
+      "id",
+      "title",
+      "description",
+      "pub_name",
+      "creators",
+      "price",
+      "release_date",
+      "diamond_id",
+      "cover_url"
+    );
 }
 
 function addBook(book) {
