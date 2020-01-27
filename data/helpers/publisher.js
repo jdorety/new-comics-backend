@@ -7,7 +7,10 @@ module.exports = {
 };
 
 function getPubList() {
-  return db.select().table("publisher");
+  return db
+    .select()
+    .table("publisher")
+    .returning("*");
 }
 
 function getPubName(name) {
