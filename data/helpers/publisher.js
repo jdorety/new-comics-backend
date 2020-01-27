@@ -17,4 +17,6 @@ function getPubName(name) {
     .where({ pub_name: name });
 }
 
-
+function addPub(name) {
+  return db("publisher").insert({ pub_name: name });
+}
