@@ -1,3 +1,6 @@
+const axios = require("axios");
+const cheerio = require("cheerio");
+
 const getCoverUrl = async diamondId => {
   try {
     const result = await axios.get(
@@ -9,7 +12,7 @@ const getCoverUrl = async diamondId => {
   }
 };
 
-export default addCover = async (url, diamondId) => {
+const addCover = async (url, diamondId) => {
   try {
     const previewsPage = await getCoverUrl(diamondId);
     const imageEndpoint = previewsPage("#MainContentImage").attr().src;
@@ -20,3 +23,5 @@ export default addCover = async (url, diamondId) => {
     console.log(err);
   }
 };
+
+module.exports = { addCover };
