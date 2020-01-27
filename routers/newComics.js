@@ -2,12 +2,9 @@ const express = require("express");
 const axios = require("axios");
 
 const router = express.Router();
+const book = require("../data/helpers/book");
 
 const API = process.env.API; // Shortbox API root URL
-
-
-
-
 
 // gets new comics for current week
 router.get("/", async (req, res) => {
@@ -47,6 +44,16 @@ router.get("/future", async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
+  }
+});
+
+router.get("/all", async (req, res) => {
+  try {
+    const allBooks = await book.getAll();
+    res.status(200).json(allBooks);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ err });
   }
 });
 
