@@ -15,6 +15,8 @@ exports.up = function(knex) {
     tbl.string("price").notNullable();
     tbl.date("release_date").notNullable();
     tbl.string("diamond_id").notNullable();
+    tbl.string("cover_url");
+    tbl.string("thumbnail_url");
   });
 };
 
