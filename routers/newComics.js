@@ -2,7 +2,6 @@ const express = require("express");
 const axios = require("axios");
 
 const router = express.Router();
-const book = require("../data/helpers/book");
 
 const API = process.env.API; // Shortbox API root URL
 
