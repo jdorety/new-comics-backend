@@ -4,10 +4,7 @@ module.exports = { getAll, getByDiamondId, addBook, getAllDiamond };
 
 function getAll() {
   return db
-    .select()
-    .table("book")
-    .innerJoin("publisher", "book.publisher_id", "publisher.id")
-    .returning(
+    .select(
       "id",
       "title",
       "description",
@@ -17,7 +14,9 @@ function getAll() {
       "release_date",
       "diamond_id",
       "cover_url"
-    );
+    )
+    .table("book")
+    .innerJoin("publisher", "book.publisher_id", "publisher.id");
 }
 
 function addBook(book) {
