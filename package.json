@@ -18,11 +18,18 @@
     "pg": "^7.17.1"
   },
   "devDependencies": {
+    "cross-env": "^7.0.0",
+    "jest": "^25.1.0",
     "nodemon": "^2.0.2",
-    "sqlite3": "^4.1.1"
+    "sqlite3": "^4.1.1",
+    "supertest": "^4.0.2"
   },
   "scripts": {
     "start": "node index.js",
-    "server": "nodemon index.js"
+    "server": "nodemon index.js",
+    "test": "cross-env NODE_ENV=testing jest --watch"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
