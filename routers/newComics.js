@@ -70,7 +70,7 @@ router.get("/all", async (req, res) => {
   }
 });
 
-router.post("/scrape", async (req, res) => {
+router.get("/scrape", async (req, res) => {
   try {
     // get new comics list
     const newComics = await getTheComics();
