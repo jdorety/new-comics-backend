@@ -31,34 +31,6 @@ router.get("/", async (req, res) => {
     const covers = await getList();
     res.status(200).json({ comics: newComics, covers });
 
-    // // make GET request to Shortbox API current release week resource
-    // const comics = await axios.get(`${URL}/comics/v1/new`);
-    // if (comics) {
-    //   let coverUrls = await getList();
-    //   const newIds = [];
-    //   for (comic of comics) {
-    //     if (!coverUrls.includes(comic.diamond_id)) {
-    //       let coverURL = await addCover(comic.diamond_id);
-    //       console.log(coverUrls);
-    //       newIds.push({ diamond_id: comic.diamond_id, url: coverURL });
-    //     }
-    //   }
-    //   if (newIds.length) {
-    //     await addToList(newIds);
-    //     coverUrls = await getList();
-    //   }
-    //   //
-    //   // for (comic of comics) {
-    //   //   const imageSrc = await addCover("https://previewsworld.com",comic.diamond_id)
-    //   //   comic.cover_url = imageSrc
-    //   // }
-    //   // responds with array of all current week releases
-    //   res
-    //     .status(200)
-    //     .send({ comics: newComics.data.comics, covers: coverUrls });
-    // } else {
-    //   res.status(400).json({ message: "The API is down", comic: comics });
-    // }
   } catch (err) {
     console.log(err);
     // respond with general error
@@ -100,18 +72,25 @@ router.get("/all", async (req, res) => {
 
 router.post("/scrape", async (req, res) => {
   try {
+    // get new comics list
     const newComics = await getTheComics();
     console.log(newComics);
+    // get list of all diamond id's and their associated cover urls
     let diamonds = await getList();
+    // convert list to only diamond id's
     diamonds = diamonds.map(diamond => {
       return diamond.diamond_id;
     });
+    // filter out all diamond id's with no associated cover url
     const noCovers = newComics.filter(comic => {
       return !diamonds.includes(comic.diamond_id);
     });
+    // check if there are diamond_id's with no covers
     if (noCovers.length) {
       for (no of noCovers) {
+        // get url for cover image from previewsworld
         const url = await addCover("https://previewsworld.com", no.diamond_id);
+        // add cover url to list
         await addToList({ url, diamond_id: no.diamond_id });
       }
       res.status(201).json({ message: "Scraped!" });
